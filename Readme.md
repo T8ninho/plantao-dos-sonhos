@@ -6,4 +6,4 @@
 Aplicativo com objetivo de auxiliar no gerenciamento de escala em regime plantonista.
 Exibindo dias de trabalho e folgas mensais e anuais, com possibilidade de atender a possíveis trocas de plantão, onde o usuario trabalha dois dias e folga dois dias, e retorna a sua escala de trabalho naturalmente.
 
-<a href="http://t8ninho.com/" target="_blank">T8ninho | Desenvolvedor Front-End</a>
+<a href="http://t8ninho.com/">T8ninho | Desenvolvedor Front-End</a>
