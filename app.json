@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "plantao_dos_sonhos",
-    "slug": "plantao_dos_sonhos",
+    "name": "plantao-dos-sonhos",
+    "slug": "plantao-dos-sonhos",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
