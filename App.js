@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Inicio from './src/Pages/Inicio/Inicio';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Plantão dos sonhos App</Text>
-      <Text>Aplicativo para gerenciar dias trabalhados em regime plantonista.</Text>
-      <StatusBar style="auto" />
+      <Inicio />
+      <StatusBar style="light" animated={true}/>
     </View>
   );
 }
@@ -14,7 +14,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#0b0f32',
     alignItems: 'center',
     justifyContent: 'center',
   },
