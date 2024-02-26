@@ -44,16 +44,15 @@ export default function Calendario() {
 
   return (
     <View style={styles.calendarPage}>
-      <View style={styles.navigationContainer}>
+      <View style={styles.headerPageContainer}>
         <TouchableOpacity onPress={navigateToPreviousYear}>
-          <Text style={styles.navigationButton}>{"<"}</Text>
+          <Text style={styles.headerPage}>{"<"}</Text>
         </TouchableOpacity>
-        <Text style={styles.currentYear}>{currentYear}</Text>
+        <Text style={styles.headerPage}>{currentYear}</Text>
         <TouchableOpacity onPress={navigateToNextYear}>
-          <Text style={styles.navigationButton}>{">"}</Text>
+          <Text style={styles.headerPage}>{">"}</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.headerPage}>Calendário</Text>
       <FlatList
         data={calendar}
         renderItem={({ item }) => (
@@ -93,12 +92,18 @@ function DayCard({ day }) {
 const styles = StyleSheet.create({
   calendarPage: {
     flex: 1,
-    padding: 20,
+    padding: 20
+  },
+  headerPageContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    backgroundColor: '#10e956'
   },
   headerPage: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#fff'
   },
   monthCard: {
     marginVertical: 10,
