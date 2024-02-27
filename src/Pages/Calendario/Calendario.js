@@ -14,16 +14,50 @@ export default function Calendario() {
     setCurrentYear(currentYear + 1);
   };
 
+      // const Meses = [
+      //     "Janeiro",
+      //     "Fevereiro",
+      //     "Março",
+      //     "Abril",
+      //     "Maio",
+      //     "Junho",
+      //     "Julho",
+      //     "Agosto",
+      //     "Setembro",
+      //     "Outubro",
+      //     "Novembro",
+      //     "Dezembro"
+      // ]
+
   useEffect(() => {
+
+
+    moment.updateLocale("pt-br", {
+      months: [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro",
+      ]
+    });
+
     const generateCalendar = () => {
       const calendarData = [];
 
       for (let month = 0; month < 12; month++) {
-        const startDay = moment().locale("pt").month(month).year(currentYear).startOf("month").startOf("week");
-        const endDay = moment().locale("pt").month(month).year(currentYear).endOf("month").endOf("week");
+        const startDay = moment().month(month).year(currentYear).startOf("month").startOf("week");
+        const endDay = moment().month(month).year(currentYear).endOf("month").endOf("week");
 
         const monthData = {
-          name: moment().locale("pt").month(month).format("MMMM"),
+          name: moment().month(month).format("MMMM"),
           days: [],
         };
 
@@ -75,7 +109,7 @@ function MonthCard({ month, days }) {
       </View>
       <FlatList
         data={days}
-        renderItem={({ item }) => <DayCard day={item} />}
+        renderItem={({ item }) => <DayCard day={item} month={month} />}
         keyExtractor={(item) => item._d.getTime().toString()}
         numColumns={7}
       />
@@ -83,11 +117,22 @@ function MonthCard({ month, days }) {
   );
 }
 
-function DayCard({ day }) {
+function DayCard({ day, month }) {
+  const isCurrentMonth = moment(day).format('MMMM') === month;
+  const Hoje = moment().isSame(day, 'day');
+
   return (
-    <Text style={styles.day}>{day.format("DD")}</Text>
+    <TouchableOpacity
+      style={styles.dayContainer}
+      onPress={() => alert(day.format("DD/MM/YYYY"))}
+    >
+      <Text style={[styles.day, isCurrentMonth ? styles.currentMonthText : styles.otherMonthText]}>
+        {day.format("DD")}
+      </Text>
+    </TouchableOpacity>
   );
 }
+
 
 const styles = StyleSheet.create({
   calendarPage: {
@@ -97,7 +142,8 @@ const styles = StyleSheet.create({
   headerPageContainer: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    backgroundColor: '#10e956'
+    backgroundColor: '#10e956',
+    paddingHorizontal: 20
   },
   headerPage: {
     fontSize: 24,
@@ -127,18 +173,20 @@ const styles = StyleSheet.create({
     margin: 1,
     color: '#089937',
   },
-  day: {
+  dayContainer: {
     flex: 1,
+    color: '#ffffff'
+  },
+  day: {
     textAlign: 'center',
     fontSize: 16,
     margin: 1,
     color: '#ffffff'
   },
-  dayP: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 16,
-    margin: 1,
-    color: '#00000039',
+  currentMonthText: {
+    color: '#ffffff',
+  },
+  otherMonthText: {
+    color: '#ffffff00',
   },
 });
