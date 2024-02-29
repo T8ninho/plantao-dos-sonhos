@@ -1,37 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import moment from 'moment';
+import DayCard from '../../Components/DayCard';
+import SelectDate from '../../Components/SelectDate';
 
-export default function Calendario() {
-  const [currentYear, setCurrentYear] = useState(2024);
-  const [calendar, setCalendar] = useState([]);
+const Calendario = () => {
+  const [currentMonth, setCurrentMonth] = useState(moment());
+  const [startDate, setStartDate] = useState(null); // Defina a data inicial
+  const [endDate, setEndDate] = useState(null); // Defina a data final
 
-  const navigateToPreviousYear = () => {
-    setCurrentYear(currentYear - 1);
+  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+
+  const showStartDatePickerHandler = () => {
+    setShowStartDatePicker(true);
   };
 
-  const navigateToNextYear = () => {
-    setCurrentYear(currentYear + 1);
+  const showEndDatePickerHandler = () => {
+    setShowEndDatePicker(true);
   };
 
-      // const Meses = [
-      //     "Janeiro",
-      //     "Fevereiro",
-      //     "Março",
-      //     "Abril",
-      //     "Maio",
-      //     "Junho",
-      //     "Julho",
-      //     "Agosto",
-      //     "Setembro",
-      //     "Outubro",
-      //     "Novembro",
-      //     "Dezembro"
-      // ]
+  const hideStartDatePickerHandler = () => {
+    setShowStartDatePicker(false);
+  };
+
+  const hideEndDatePickerHandler = () => {
+    setShowEndDatePicker(false);
+  };
+
+  const onStartDateChange = (selectedDate) => {
+    setStartDate(moment(selectedDate));
+    hideStartDatePickerHandler();
+  };
+
+  const onEndDateChange = (selectedDate) => {
+    setEndDate(moment(selectedDate));
+    hideEndDatePickerHandler();
+  };
 
   useEffect(() => {
-
-
     moment.updateLocale("pt-br", {
       months: [
         "Janeiro",
@@ -48,145 +55,148 @@ export default function Calendario() {
         "Dezembro",
       ]
     });
+  }, [])
 
-    const generateCalendar = () => {
-      const calendarData = [];
+  const nextMonth = () => {
+    setCurrentMonth(currentMonth.clone().add(1, 'month'));
+  };
 
-      for (let month = 0; month < 12; month++) {
-        const startDay = moment().month(month).year(currentYear).startOf("month").startOf("week");
-        const endDay = moment().month(month).year(currentYear).endOf("month").endOf("week");
+  const prevMonth = () => {
+    setCurrentMonth(currentMonth.clone().subtract(1, 'month'));
+  };
 
-        const monthData = {
-          name: moment().month(month).format("MMMM"),
-          days: [],
-        };
+  const Plantao = (day) => {
+    return day.isSameOrAfter(startDate) && day.isSameOrBefore(endDate) && day.diff(startDate, 'days') % 2 === 0;
+  };
 
-        let day = startDay.clone().subtract(1, "day");
+  const renderCalendar = () => {
+    const daysInMonth = currentMonth.daysInMonth();
+    const firstDayOfMonth = currentMonth.startOf('month').day();
+    const daysArray = [];
 
-        while (day.isBefore(endDay, "day")) {
-          monthData.days.push(day.add(1, "day").clone());
-        }
+    for (let i = 0; i < firstDayOfMonth; i++) {
+      daysArray.push(null);
+    }
 
-        calendarData.push(monthData);
-      }
+    for (let i = 1; i <= daysInMonth; i++) {
+      const day = currentMonth.clone().date(i);
+      daysArray.push(day);
+    }
 
-      setCalendar(calendarData);
-    };
-
-    generateCalendar();
-  }, [currentYear]);
-
-  return (
-    <View style={styles.calendarPage}>
-      <View style={styles.headerPageContainer}>
-        <TouchableOpacity onPress={navigateToPreviousYear}>
-          <Text style={styles.headerPage}>{"<"}</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerPage}>{currentYear}</Text>
-        <TouchableOpacity onPress={navigateToNextYear}>
-          <Text style={styles.headerPage}>{">"}</Text>
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={calendar}
-        renderItem={({ item }) => (
-          <MonthCard month={item.name} days={item.days} />
+    return daysArray.map((day, index) => (
+      <View key={index} style={styles.dayContainer}>
+        {day !== null ? (
+          // <Text style={styles.dayText}>{day}</Text>
+          <DayCard day={day} currentMonth={currentMonth} Plantao={Plantao}/>
+        ) : (
+          <Text style={styles.dayText}></Text>
         )}
-        keyExtractor={(item) => item.name}
-      />
-    </View>
-  );
-}
-
-function MonthCard({ month, days }) {
-  return (
-    <View style={styles.monthCard}>
-      <Text style={styles.header}>{month}</Text>
-      <View style={styles.weekDays}>
-        {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((weekday) => (
-          <Text key={weekday} style={styles.weekDay}>{weekday}</Text>
-        ))}
       </View>
-      <FlatList
-        data={days}
-        renderItem={({ item }) => <DayCard day={item} month={month} />}
-        keyExtractor={(item) => item._d.getTime().toString()}
-        numColumns={7}
-      />
-    </View>
-  );
-}
-
-function DayCard({ day, month }) {
-  const isCurrentMonth = moment(day).format('MMMM') === month;
-  const Hoje = moment().isSame(day, 'day');
+      
+    ));
+  };
 
   return (
-    <TouchableOpacity
-      style={styles.dayContainer}
-      onPress={() => alert(day.format("DD/MM/YYYY"))}
-    >
-      <Text style={[styles.day, isCurrentMonth ? styles.currentMonthText : styles.otherMonthText]}>
-        {day.format("DD")}
-      </Text>
-    </TouchableOpacity>
-  );
-}
+    <View style={styles.container}>
+      
+      <View style={styles.header}>
+        <TouchableOpacity onPress={prevMonth}>
+          <Text style={[styles.headerText, styles.headerIcon]}>&lt;</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerText}>{currentMonth.format('MMMM YYYY')}</Text>
+        <TouchableOpacity onPress={nextMonth}>
+          <Text style={[styles.headerText, styles.headerIcon]}>&gt;</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.weekDays}>
+		  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((weekday) => (
+			  <Text key={weekday} style={styles.weekDay}>{weekday}</Text>
+		  ))}
+		  </View>
+      <View style={styles.calendar}>{renderCalendar()}</View>
 
+      <View style={{backgroundColor: '#00000025', marginTop: 100, padding: 15}}>
+        
+        <TouchableOpacity onPress={showStartDatePickerHandler}>
+          <Text style={{color: '#fff'}}>Selecionar Data Inicial que você trabalha</Text>
+        </TouchableOpacity>
+        <SelectDate 
+          isVisible={showStartDatePicker}
+          mode="date"
+          initialDate={startDate ? startDate.toDate() : new Date()}
+          onDateChange={onStartDateChange}
+          onCancel={hideStartDatePickerHandler}
+        />
+        <TouchableOpacity onPress={showEndDatePickerHandler}>
+          <Text style={{color: '#fff'}}>Selecionar Data Final</Text>
+        </TouchableOpacity>
+        <SelectDate
+          isVisible={showEndDatePicker}
+          mode="date"
+          initialDate={endDate ? endDate.toDate() : new Date()}
+          onDateChange={onEndDateChange}
+          onCancel={hideEndDatePickerHandler}
+        />
+        {startDate && endDate && (
+          <View style={styles.selectedDates}>
+            <Text style={{color: '#fff'}}>Data Inicial: {startDate.format('DD/MM/YYYY')}</Text>
+            <Text style={{color: '#fff'}}>Data Final: {endDate.format('DD/MM/YYYY')}</Text>
+          </View>
+        )}
+      </View>
+  
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-  calendarPage: {
+  container: {
     flex: 1,
-    padding: 20
-  },
-  headerPageContainer: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    backgroundColor: '#10e956',
-    paddingHorizontal: 20
-  },
-  headerPage: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#fff'
-  },
-  monthCard: {
-    marginVertical: 10,
+    padding: 20,
   },
   header: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#10e956',
-  },
-  weekDays: {
+	  backgroundColor: '#10e956',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 10
   },
-  weekDay: {
-    flex: 1,
+  headerText: {
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 14,
-    margin: 1,
-    color: '#089937',
+		fontWeight: 'bold',
+		fontSize: 22,
+		color: '#ffff',
+    padding: 10,
+  },
+  headerIcon: {
+		fontSize: 25,
+  },
+  calendar: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   dayContainer: {
-    flex: 1,
-    color: '#ffffff'
+    width: '14.28%', // 7 dias por semana
+    aspectRatio: 1,
   },
-  day: {
-    textAlign: 'center',
+  dayText: {
     fontSize: 16,
-    margin: 1,
-    color: '#ffffff'
   },
-  currentMonthText: {
-    color: '#ffffff',
-  },
-  otherMonthText: {
-    color: '#ffffff00',
-  },
+  weekDays: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginBottom: 5,
+	  },
+	weekDay: {
+		flex: 1,
+		textAlign: 'center',
+		fontWeight: 'bold',
+		fontSize: 14,
+		margin: 1,
+		color: '#089937',
+	  },
+    
 });
+
+export default Calendario;
