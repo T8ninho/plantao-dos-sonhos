@@ -1,5 +1,9 @@
 # Plantão dos Sonhos
-<img src="https://static.vecteezy.com/system/resources/previews/021/049/242/non_2x/flat-icon-calendar-4-of-july-date-day-and-month-illustration-green-color-banner-4-jul-4th-of-jul-free-free-calendar-free-png.png">
+<div align="center">
+  <h1>Aguarde...</h1>
+  <p>Embreve mais detalhes sobre este novo site.</p>
+  <img align="center" height="150" src="https://www.blogson.com.br/wp-content/uploads/2017/10/loading-gif-transparent-10.gif"  />
+</div>
 
 # Versão 1.0.0
 
