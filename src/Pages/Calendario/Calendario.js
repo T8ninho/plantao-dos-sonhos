@@ -156,13 +156,12 @@ const Calendario = () => {
       </View>
       <View style={styles.calendar}>{renderCalendar()}</View>
 
-      <View style={{ backgroundColor: '#00000025', marginTop: 30, padding: 15, flexDirection: 'row' }}>
+      <View style={{ backgroundColor: '#00000025', marginTop: 15, padding: 15, flexDirection: 'row' }}>
         <Text style={{
           textAlign: 'center',
           textAlignVertical: 'center',
           aspectRatio: 1,
-          width: '12%',
-          color: 'green',
+          width: '8%',
           borderColor: '#00ff00',
           borderWidth: 2,
           borderRadius: 50,
@@ -170,10 +169,22 @@ const Calendario = () => {
         />
         <Text style={{ textAlignVertical: 'center', color: '#fff', paddingLeft: '5%' }}>Plantões de trabalho</Text>
       </View>
+      <View style={{ backgroundColor: '#00000025', paddingLeft: 15, paddingBottom: 15, flexDirection: 'row' }}>
+        <Text style={{
+          textAlign: 'center',
+          textAlignVertical: 'center',
+          backgroundColor: '#005499',
+          aspectRatio: 1,
+          width: '8%',
+          borderRadius: 10,
+        }}
+        />
+        <Text style={{ textAlignVertical: 'center', color: '#fff', paddingLeft: '5%' }}>Feriados Nacionais</Text>
+      </View>
 
       <FeriadosList feriados={feriados} currentMonth={currentMonth} />
 
-      <View style={{ backgroundColor: '#00000025', marginTop: 50, padding: 15 }}>
+      <View style={{ backgroundColor: '#00000025', marginTop: 10, padding: 15, display: 'none' }}>
         <View style={{ marginBottom: 15, backgroundColor: '#00000025', padding: 10 }}>
           <TouchableOpacity onPress={showStartDatePickerHandler}>
             <Text style={{ color: '#fff' }}>Selecionar Data Inicial que você Folga</Text>

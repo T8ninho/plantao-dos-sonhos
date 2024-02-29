@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   feriado: {
-    backgroundColor: 'red',
+    backgroundColor: '#005499',
   },
   feriadoText: {
     color: 'white',

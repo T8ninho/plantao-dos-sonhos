@@ -30,7 +30,7 @@ const FeriadosList = ({ feriados, currentMonth }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#00000025', 
-    marginTop: 30, 
+    marginTop: 10, 
     padding: 15
   },
   title: {
@@ -45,15 +45,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 5,
     padding: 10,
-    backgroundColor: '#10e956',
+    backgroundColor: '#005499',
     borderRadius: 5,
   },
   feriadoDate: {
     fontSize: 16,
+    color: '#fff'
   },
   feriadoName: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#fff'
   },
 });
 
