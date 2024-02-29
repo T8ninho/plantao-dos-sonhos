@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import 'moment/locale/pt-br';
+
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import moment from 'moment';
 import DayCard from '../../Components/DayCard';
 import SelectDate from '../../Components/SelectDate';
 
-const Calendario = () => {
-  const [currentMonth, setCurrentMonth] = useState(moment());
-  const [startDate, setStartDate] = useState(null); // Defina a data inicial
-  const [endDate, setEndDate] = useState(null); // Defina a data final
+moment.locale('pt-br');
 
+const Calendario = () => {
+
+
+  const [currentMonth, setCurrentMonth] = useState(moment());
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [showStartDatePicker, setShowStartDatePicker] = useState(false);
   const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+
+  const weekdaysShort = moment.weekdaysShort();
 
   const showStartDatePickerHandler = () => {
     setShowStartDatePicker(true);
@@ -38,24 +45,6 @@ const Calendario = () => {
     hideEndDatePickerHandler();
   };
 
-  useEffect(() => {
-    moment.updateLocale("pt-br", {
-      months: [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro",
-      ]
-    });
-  }, [])
 
   const nextMonth = () => {
     setCurrentMonth(currentMonth.clone().add(1, 'month'));
@@ -66,8 +55,13 @@ const Calendario = () => {
   };
 
   const Plantao = (day) => {
-    return day.isSameOrAfter(startDate) && day.isSameOrBefore(endDate) && day.diff(startDate, 'days') % 2 === 0;
+    return(
+      day.isSameOrAfter(startDate) && 
+      day.isSameOrBefore(endDate) && 
+      day.diff(startDate, 'days') % 2 === 0
+    )
   };
+  
 
   const renderCalendar = () => {
     const daysInMonth = currentMonth.daysInMonth();
@@ -103,40 +97,58 @@ const Calendario = () => {
         <TouchableOpacity onPress={prevMonth}>
           <Text style={[styles.headerText, styles.headerIcon]}>&lt;</Text>
         </TouchableOpacity>
-        <Text style={styles.headerText}>{currentMonth.format('MMMM YYYY')}</Text>
+        <Text style={styles.headerText}>{currentMonth.format('MMMM').charAt(0).toUpperCase() + currentMonth.format('MMMM/YYYY').slice(1)}</Text>
         <TouchableOpacity onPress={nextMonth}>
           <Text style={[styles.headerText, styles.headerIcon]}>&gt;</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.weekDays}>
-		  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((weekday) => (
-			  <Text key={weekday} style={styles.weekDay}>{weekday}</Text>
+		  {weekdaysShort.map((weekday) => (
+			  <Text key={weekday} style={styles.weekDay}>{weekday.charAt(0).toUpperCase() + weekday.slice(1)}</Text>
 		  ))}
 		  </View>
       <View style={styles.calendar}>{renderCalendar()}</View>
 
-      <View style={{backgroundColor: '#00000025', marginTop: 100, padding: 15}}>
-        
-        <TouchableOpacity onPress={showStartDatePickerHandler}>
-          <Text style={{color: '#fff'}}>Selecionar Data Inicial que você trabalha</Text>
-        </TouchableOpacity>
-        <SelectDate 
-          isVisible={showStartDatePicker}
-          mode="date"
-          initialDate={startDate ? startDate.toDate() : new Date()}
-          onDateChange={onStartDateChange}
-          onCancel={hideStartDatePickerHandler}
-        />
-        <TouchableOpacity onPress={showEndDatePickerHandler}>
-          <Text style={{color: '#fff'}}>Selecionar Data Final</Text>
-        </TouchableOpacity>
-        <SelectDate
-          isVisible={showEndDatePicker}
-          mode="date"
-          initialDate={endDate ? endDate.toDate() : new Date()}
-          onDateChange={onEndDateChange}
-          onCancel={hideEndDatePickerHandler}
-        />
+      <View style={{backgroundColor: '#00000025', marginTop: 30, padding: 15, flexDirection: 'row'}}>
+        <Text style={{
+          textAlign: 'center',
+          textAlignVertical: 'center',
+          aspectRatio: 1,
+          width: '12%',
+          color: 'green',
+          borderColor: '#10e956',
+          borderWidth: 1,
+          borderRadius: 50,
+        }}
+      />
+        <Text style={{textAlignVertical: 'center', color: '#fff', paddingLeft: '5%'}}>Plantões de trabalho</Text>
+      </View>
+
+      <View style={{backgroundColor: '#00000025', marginTop: 50, padding: 15}}>
+        <View style={{marginBottom: 15, backgroundColor: '#00000025', padding: 10}}>
+          <TouchableOpacity onPress={showStartDatePickerHandler}>
+            <Text style={{color: '#fff'}}>Selecionar Data Inicial que você Folga</Text>
+          </TouchableOpacity>
+          <SelectDate 
+            isVisible={showStartDatePicker}
+            mode="date"
+            initialDate={startDate ? startDate.toDate() : new Date()}
+            onDateChange={onStartDateChange}
+            onCancel={hideStartDatePickerHandler}
+          />
+        </View>
+        <View style={{marginBottom: 15, backgroundColor: '#00000025', padding: 10}}>
+          <TouchableOpacity onPress={showEndDatePickerHandler}>
+            <Text style={{color: '#fff'}}>Selecionar Data Final</Text>
+          </TouchableOpacity>
+          <SelectDate
+            isVisible={showEndDatePicker}
+            mode="date"
+            initialDate={endDate ? endDate.toDate() : new Date()}
+            onDateChange={onEndDateChange}
+            onCancel={hideEndDatePickerHandler}
+          />
+        </View>
         {startDate && endDate && (
           <View style={styles.selectedDates}>
             <Text style={{color: '#fff'}}>Data Inicial: {startDate.format('DD/MM/YYYY')}</Text>
@@ -196,7 +208,10 @@ const styles = StyleSheet.create({
 		margin: 1,
 		color: '#089937',
 	  },
-    
+    selectedDates: {
+      padding: 10,
+      backgroundColor: '#00000025'
+    }
 });
 
 export default Calendario;

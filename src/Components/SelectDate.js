@@ -24,7 +24,7 @@ export default function SelectDate ({ isVisible, mode, onDateChange, onCancel, i
         />
       )}
       <TouchableOpacity onPress={onCancel}>
-        <Text>Cancelar</Text>
+        <Text style={{color: '#ffffff51'}}>Cancelar</Text>
       </TouchableOpacity>
     </View>
   );

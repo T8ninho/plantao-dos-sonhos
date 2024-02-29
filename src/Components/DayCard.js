@@ -1,13 +1,8 @@
 import {TouchableOpacity, Text, StyleSheet} from 'react-native'
-
 import moment from 'moment';
-import { useState } from 'react';
 
-export default function DayCard({ day, currentMonth, Plantao }) {
-	// const isCurrentMonth = moment(day).format('MMMM') === month;
-	// const Hoje = moment().isSame(day, 'day');
+export default function DayCard({ day, Plantao }) {
 	const Hoje = day.isSame(moment(), 'day');
-	// const Plantao = index % 2 === 1; // Destacar a cada dois dias
 
 	return (
 		<TouchableOpacity
@@ -29,13 +24,17 @@ const styles = StyleSheet.create({
 		borderColor: '#ffffff21',
 		borderWidth: 1,
 		borderRadius: 10,
-		justifyContent: 'center'
+		margin: 1,
+		justifyContent: 'center',
 	  },
 	  day: {
+		flex: 1,
 		textAlign: 'center',
+		textAlignVertical: 'center',
 		fontSize: 16,
 		margin: 1,
-		color: '#ffffff'
+		color: '#ffffff',
+		margin: 5,
 	  },
 	  hoje: {
 		backgroundColor: '#10e956'
@@ -47,5 +46,8 @@ const styles = StyleSheet.create({
 	  },
 	  PlantaoText: {
 		color: 'green',
+		borderColor: '#10e956',
+		borderWidth: 1,
+		borderRadius: 50
 	  }
 })
