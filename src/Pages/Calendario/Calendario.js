@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import DayCard from '../../Components/DayCard';
 import SelectDate from '../../Components/SelectDate';
@@ -14,36 +15,16 @@ const Calendario = () => {
   const [currentMonth, setCurrentMonth] = useState(moment());
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
-  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
   const [feriados, setFeriados] = useState([]); // Adicione o estado para armazenar os feriados
 
   const weekdaysShort = moment.weekdaysShort();
 
-  const showStartDatePickerHandler = () => {
-    setShowStartDatePicker(true);
-  };
-
-  const showEndDatePickerHandler = () => {
-    setShowEndDatePicker(true);
-  };
-
-  const hideStartDatePickerHandler = () => {
-    setShowStartDatePicker(false);
-  };
-
-  const hideEndDatePickerHandler = () => {
-    setShowEndDatePicker(false);
-  };
-
   const onStartDateChange = (selectedDate) => {
     setStartDate(moment(selectedDate));
-    hideStartDatePickerHandler();
   };
 
   const onEndDateChange = (selectedDate) => {
     setEndDate(moment(selectedDate));
-    hideEndDatePickerHandler();
   };
 
   const nextMonth = () => {
@@ -137,14 +118,14 @@ const Calendario = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={prevMonth}>
-          <Text style={[styles.headerText, styles.headerIcon]}>&lt;</Text>
+          <FontAwesome name="chevron-left" size={32} color="black" />
         </TouchableOpacity>
         <Text style={styles.headerText}>
           {currentMonth.format('MMMM').charAt(0).toUpperCase() +
             currentMonth.format('MMMM/YYYY').slice(1)}
         </Text>
         <TouchableOpacity onPress={nextMonth}>
-          <Text style={[styles.headerText, styles.headerIcon]}>&gt;</Text>
+          <FontAwesome name="chevron-right" size={32} color="black" />
         </TouchableOpacity>
       </View>
       <View style={styles.weekDays}>
@@ -184,36 +165,20 @@ const Calendario = () => {
 
       <FeriadosList feriados={feriados} currentMonth={currentMonth} />
 
-      <View style={{ backgroundColor: '#00000025', marginTop: 10, padding: 15, display: 'none' }}>
-        <View style={{ marginBottom: 15, backgroundColor: '#00000025', padding: 10 }}>
-          <TouchableOpacity onPress={showStartDatePickerHandler}>
-            <Text style={{ color: '#fff' }}>Selecionar Data Inicial que você Folga</Text>
-          </TouchableOpacity>
+      <View style={styles.selectedDates}>
           <SelectDate
-            isVisible={showStartDatePicker}
-            mode="date"
             initialDate={startDate ? startDate.toDate() : new Date()}
             onDateChange={onStartDateChange}
-            onCancel={hideStartDatePickerHandler}
-          />
-        </View>
-        <View style={{ marginBottom: 15, backgroundColor: '#00000025', padding: 10 }}>
-          <TouchableOpacity onPress={showEndDatePickerHandler}>
-            <Text style={{ color: '#fff' }}>Selecionar Data Final</Text>
-          </TouchableOpacity>
+          >Data Inicial</SelectDate>
           <SelectDate
-            isVisible={showEndDatePicker}
-            mode="date"
             initialDate={endDate ? endDate.toDate() : new Date()}
             onDateChange={onEndDateChange}
-            onCancel={hideEndDatePickerHandler}
-          />
-        </View>
+          >Data Final</SelectDate>
         {startDate && endDate && (
-          <View style={styles.selectedDates}>
+          <>
             <Text style={{ color: '#fff' }}>Data Inicial: {startDate.format('DD/MM/YYYY')}</Text>
             <Text style={{ color: '#fff' }}>Data Final: {endDate.format('DD/MM/YYYY')}</Text>
-          </View>
+          </>
         )}
       </View>
     </View>
@@ -268,7 +233,8 @@ const styles = StyleSheet.create({
     color: '#10e956',
   },
   selectedDates: {
-    padding: 10,
+    padding: 15,
+    marginTop: 10,
     backgroundColor: '#00000025',
   },
 });

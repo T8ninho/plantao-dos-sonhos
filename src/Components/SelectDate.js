@@ -1,32 +1,46 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-export default function SelectDate ({ isVisible, mode, onDateChange, onCancel, initialDate }) {
+import { View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+
+export default function SelectDate ({ onDateChange, initialDate, children }) {
   const [date, setDate] = useState(initialDate || new Date());
 
-  const onDateChangeHandler = (event, selectedDate) => {
-    if (selectedDate) {
-      setDate(selectedDate);
-      onDateChange(selectedDate);
-    }
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+    onDateChange(currentDate)
+  };
+
+  const showMode = (currentMode) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+  const showDatepicker = () => {
+    showMode('date');
   };
 
   return (
-    <View>
-      {isVisible && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onDateChangeHandler}
-        />
-      )}
-      <TouchableOpacity onPress={onCancel}>
-        <Text style={{color: '#ffffff51'}}>Cancelar</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+        <TouchableOpacity onPress={showDatepicker} style={{flexDirection: 'row'}}>
+          <FontAwesome name="calendar" size={32} color="#00ff00" />
+          <Text style={styles.title}>{children}</Text>
+        </TouchableOpacity>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    paddingBottom: 10
+  },
+  title: {
+    color: '#fff',
+    textAlignVertical: 'center',
+    paddingLeft: '5%'
+  }
+})
