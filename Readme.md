@@ -12,6 +12,6 @@
 
 # APIs utilizadas 
 
- Neste projeto está sendo utilizada a [Brasil API](https://brasilapi.com.br/), para receber feriados nacionais.
+[Brasil API](https://brasilapi.com.br/): Exibindo feriados nacionais.
 
 [T8ninho | Desenvolvedor Front-End](http://t8ninho.com/)
