@@ -5,9 +5,9 @@ import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
-import DayCard from '../../Components/DayCard';
-import SelectDate from '../../Components/SelectDate';
-import FeriadosList from '../../Components/FeriadosList';
+import DayCard from '../../../Components/DayCard';
+import SelectDate from '../../../Components/SelectDate';
+import FeriadosList from '../../../Components/FeriadosList';
 
 moment.locale('pt-br');
 

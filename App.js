@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 
-import Inicio from './src/Pages/Inicio/Inicio';
 import { useEffect, useState } from 'react';
+import Routes from './src/Pages/Routes/Routes';
 
 export default function App() {
 
@@ -19,10 +19,11 @@ export default function App() {
   //---------------------------------------------
 
   return (
-    <SafeAreaView style={[styles.container, {paddingTop: statusBarHeight}]}>
-      <Inicio />
-      <StatusBar style="light" backgroundColor='#0b0f32'/>
-    </SafeAreaView>
+    
+    <Routes />
+    // <SafeAreaView style={[styles.container]}>
+    //   <StatusBar style="light" backgroundColor='#0b0f32'/>
+    // </SafeAreaView>
   );
 }
 
