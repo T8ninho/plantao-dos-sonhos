@@ -165,21 +165,27 @@ const Calendario = () => {
 
       <FeriadosList feriados={feriados} currentMonth={currentMonth} />
 
-      <View style={styles.selectedDates}>
-          <SelectDate
-            initialDate={startDate ? startDate.toDate() : new Date()}
-            onDateChange={onStartDateChange}
-          >Data Inicial</SelectDate>
-          <SelectDate
-            initialDate={endDate ? endDate.toDate() : new Date()}
-            onDateChange={onEndDateChange}
-          >Data Final</SelectDate>
-        {startDate && endDate && (
-          <>
-            <Text style={{ color: '#fff' }}>Data Inicial: {startDate.format('DD/MM/YYYY')}</Text>
-            <Text style={{ color: '#fff' }}>Data Final: {endDate.format('DD/MM/YYYY')}</Text>
-          </>
-        )}
+      <View style={styles.selectedDatesContainer}>
+          <View style={styles.selectDateItem}>
+            <SelectDate initialDate={startDate ? startDate.toDate() : new Date()} onDateChange={onStartDateChange}>
+              Data Inicial
+            </SelectDate>
+            {startDate && (
+            <View style={styles.dateTextItem}>
+              <Text style={styles.selectDateText}>{startDate.format('DD/MM/YYYY')}</Text>
+            </View>
+            )}
+          </View>
+          <View style={styles.selectDateItem}>
+            <SelectDate initialDate={endDate ? endDate.toDate() : new Date()} onDateChange={onEndDateChange} >
+              Data Final
+            </SelectDate>
+            {endDate && (
+              <View style={styles.dateTextItem}>
+                <Text style={styles.selectDateText}>{endDate.format('DD/MM/YYYY')}</Text>
+              </View>
+            )}
+          </View>
       </View>
     </View>
   );
@@ -232,11 +238,26 @@ const styles = StyleSheet.create({
     margin: 1,
     color: '#10e956',
   },
-  selectedDates: {
-    padding: 15,
+  selectedDatesContainer: {
+    paddingTop: 15,
+    paddingHorizontal: 15,
+    paddingBottom: 5,
     marginTop: 10,
     backgroundColor: '#00000025',
   },
+  selectDateItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginRight: 10,
+  },
+  dateTextItem: {
+    width: '48%',
+    paddingBottom: 10,
+    justifyContent: 'center'
+  },
+  selectDateText: {
+    color: '#fff'
+  }
 });
 
 export default Calendario;

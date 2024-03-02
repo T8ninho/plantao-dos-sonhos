@@ -12,18 +12,15 @@ export default function SelectDate ({ onDateChange, initialDate, children }) {
     onDateChange(currentDate)
   };
 
-  const showMode = (currentMode) => {
+  function showDatepicker() {
     DateTimePickerAndroid.open({
       value: date,
       onChange,
-      mode: currentMode,
+      mode: 'date',
       is24Hour: true,
     });
   };
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
+  
   return (
     <View style={styles.container}>
         <TouchableOpacity onPress={showDatepicker} style={{flexDirection: 'row'}}>
