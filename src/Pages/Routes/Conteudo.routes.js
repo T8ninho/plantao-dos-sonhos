@@ -1,18 +1,60 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { FontAwesome } from '@expo/vector-icons';
 
-import Inicio from '../Conteudo/Inicio/Inicio';
 import Calendario from '../Conteudo/Calendario/Calendario';
+import Sobre from '../Conteudo/Sobre/Sobre';
 
-const Stack = createNativeStackNavigator()
+const Drawer = createDrawerNavigator();
 
 export default function Conteudo() {
+
+	const VidroEmbaçado = () => (
+		<View style={styles.vidroEmbacado}>
+		  {/* Seu conteúdo embaçado aqui */}
+		</View>
+	  );
+	  
  return (
-	<NavigationContainer>
-		<Stack.Navigator initialRouteName='Calendario'>
-			<Stack.Screen name='Inicio' component={Inicio}/>
-			<Stack.Screen name='Calendario' component={Calendario} />
-		</Stack.Navigator>
-	</NavigationContainer>
+		<Drawer.Navigator 
+			initialRouteName='Calendario'
+			screenOptions={{
+				headerTintColor: '#fff',
+				headerStyle: {
+					backgroundColor: '#0b0f32',
+				},
+				drawerActiveBackgroundColor: '#00ff00',
+				drawerActiveTintColor: '#000',
+				drawerInactiveTintColor: '#fff',
+				drawerType: 'back',
+				drawerLabelStyle: {
+					marginLeft: -20
+				},
+				drawerStyle: {
+					backgroundColor: '#0b0f32',				
+				}
+			}}
+	  
+		>
+			<Drawer.Screen 
+				name='Calendario' 
+				component={Calendario}  
+				options={{
+					title: 'Calendário',
+					drawerIcon: ({focused, color}) => (
+						<FontAwesome name="calendar" size={32} color={color}/>
+					)
+				}}
+			/>
+			<Drawer.Screen 
+				name='Sobre' 
+				component={Sobre}
+				options={{
+					title: 'Sobre',
+					drawerIcon: ({focused, color}) => (
+						<FontAwesome name="info-circle" size={32} color={color}/>
+					)
+				}}
+			/>
+		</Drawer.Navigator>
   );
 }

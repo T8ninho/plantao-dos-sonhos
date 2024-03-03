@@ -8,8 +8,10 @@ import axios from 'axios';
 import DayCard from '../../../Components/DayCard';
 import SelectDate from '../../../Components/SelectDate';
 import FeriadosList from '../../../Components/FeriadosList';
+import MedidorPixel from '../../../Components/MedidorPixel';
 
 moment.locale('pt-br');
+
 
 const Calendario = () => {
   const [currentMonth, setCurrentMonth] = useState(moment());
@@ -108,7 +110,7 @@ const Calendario = () => {
         {day !== null ? (
           <DayCard day={day} currentMonth={currentMonth} Plantao={Plantao} feriados={feriados} />
         ) : (
-          <Text style={styles.dayText}></Text>
+          <Text></Text>
         )}
       </View>
     ));
@@ -137,30 +139,13 @@ const Calendario = () => {
       </View>
       <View style={styles.calendar}>{renderCalendar()}</View>
 
-      <View style={{ backgroundColor: '#00000025', marginTop: 15, padding: 15, flexDirection: 'row' }}>
-        <Text style={{
-          textAlign: 'center',
-          textAlignVertical: 'center',
-          aspectRatio: 1,
-          width: '8%',
-          borderColor: '#00ff00',
-          borderWidth: 2,
-          borderRadius: 50,
-        }}
-        />
-        <Text style={{ textAlignVertical: 'center', color: '#fff', paddingLeft: '5%' }}>Plantões de trabalho</Text>
+      <View style={styles.descricaoContainer}>
+        <Text style={styles.descricaoIconPlantao}/>
+        <Text style={styles.descricaoText}>Plantões de trabalho</Text>
       </View>
-      <View style={{ backgroundColor: '#00000025', paddingLeft: 15, paddingBottom: 15, flexDirection: 'row' }}>
-        <Text style={{
-          textAlign: 'center',
-          textAlignVertical: 'center',
-          backgroundColor: '#005499',
-          aspectRatio: 1,
-          width: '8%',
-          borderRadius: 10,
-        }}
-        />
-        <Text style={{ textAlignVertical: 'center', color: '#fff', paddingLeft: '5%' }}>Feriados Nacionais</Text>
+      <View style={styles.descricaoContainer}>
+        <Text style={styles.descricaoIconFeriado}/>
+        <Text style={styles.descricaoText}>Feriados Nacionais</Text>
       </View>
 
       <FeriadosList feriados={feriados} currentMonth={currentMonth} />
@@ -194,25 +179,23 @@ const Calendario = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: MedidorPixel(10), //20 px
+    backgroundColor: '#071e42'
   },
   header: {
     backgroundColor: '#00ff00',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    marginBottom: MedidorPixel(10), //10 px
+    paddingHorizontal: MedidorPixel(10), //10 px
   },
   headerText: {
     textAlign: 'center',
     fontWeight: '900',
-    fontSize: 22,
+    fontSize: MedidorPixel(22), //22px
     color: '#000',
-    padding: 10,
-  },
-  headerIcon: {
-    fontSize: 25,
+    padding: MedidorPixel(10), //10 px
   },
   calendar: {
     flexDirection: 'row',
@@ -222,41 +205,62 @@ const styles = StyleSheet.create({
     width: '14.28%', // 7 dias por semana
     aspectRatio: 1,
   },
-  dayText: {
-    fontSize: 16,
-  },
   weekDays: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    marginBottom: MedidorPixel(5), //5 px
   },
   weekDay: {
     flex: 1,
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: MedidorPixel(14), //14px
     margin: 1,
     color: '#10e956',
   },
   selectedDatesContainer: {
-    paddingTop: 15,
-    paddingHorizontal: 15,
-    paddingBottom: 5,
-    marginTop: 10,
+    paddingTop: MedidorPixel(15), //15 px
+    paddingHorizontal: MedidorPixel(15), //15 px
+    paddingBottom: MedidorPixel(5), //5 px
+    marginTop: MedidorPixel(10), //10 px
     backgroundColor: '#00000025',
   },
   selectDateItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginRight: 10,
+    marginRight: MedidorPixel(10), //10 px
   },
   dateTextItem: {
     width: '48%',
-    paddingBottom: 10,
+    paddingBottom: MedidorPixel(10), //10 px
     justifyContent: 'center'
   },
   selectDateText: {
     color: '#fff'
+  },
+  descricaoContainer: {
+    backgroundColor: '#00000025', 
+    marginTop: MedidorPixel(15), //15 px
+    padding: MedidorPixel(15), //15 px
+    flexDirection: 'row'
+  },
+  descricaoText: {
+    textAlignVertical: 'center', 
+    color: '#fff', 
+    paddingLeft: MedidorPixel(10),
+  },
+  descricaoIconPlantao: {
+    aspectRatio: 1,
+    width: '8%',
+    borderColor: '#00ff00',
+    borderWidth: 2,
+    borderRadius: 50,
+  },
+  descricaoIconFeriado: {
+    backgroundColor: '#005499',
+    aspectRatio: 1,
+    width: '8%',
+    borderRadius: 10,
   }
 });
 

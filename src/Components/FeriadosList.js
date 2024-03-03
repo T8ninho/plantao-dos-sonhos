@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import moment from 'moment';
+import MedidorPixel from './MedidorPixel';
 
 const FeriadosList = ({ feriados, currentMonth }) => {
   // Filtrar feriados para incluir apenas aqueles do mês atual
@@ -30,30 +31,30 @@ const FeriadosList = ({ feriados, currentMonth }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#00000025', 
-    marginTop: 10, 
-    padding: 15
+    marginTop: MedidorPixel(10), 
+    padding: MedidorPixel(15)
   },
   title: {
-    fontSize: 20,
+    fontSize: MedidorPixel(20),
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: MedidorPixel(10),
     color: '#fff'
   },
   feriadoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 5,
-    padding: 10,
+    marginBottom: MedidorPixel(5),
+    padding: MedidorPixel(10),
     backgroundColor: '#005499',
     borderRadius: 5,
   },
   feriadoDate: {
-    fontSize: 16,
+    fontSize: MedidorPixel(16),
     color: '#fff'
   },
   feriadoName: {
-    fontSize: 16,
+    fontSize: MedidorPixel(16),
     fontWeight: 'bold',
     color: '#fff'
   },

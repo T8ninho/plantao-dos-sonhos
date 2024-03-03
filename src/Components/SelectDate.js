@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+import MedidorPixel from './MedidorPixel';
 
 export default function SelectDate ({ onDateChange, initialDate, children }) {
   const [date, setDate] = useState(initialDate || new Date());
@@ -24,7 +25,7 @@ export default function SelectDate ({ onDateChange, initialDate, children }) {
   return (
     <View style={styles.container}>
         <TouchableOpacity onPress={showDatepicker} style={{flexDirection: 'row'}}>
-          <FontAwesome name="calendar" size={32} color="#00ff00" />
+          <FontAwesome name="calendar" size={MedidorPixel(32)} color="#00ff00" />
           <Text style={styles.title}>{children}</Text>
         </TouchableOpacity>
     </View>
@@ -33,11 +34,11 @@ export default function SelectDate ({ onDateChange, initialDate, children }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 10
+    paddingBottom: MedidorPixel(10)
   },
   title: {
     color: '#fff',
     textAlignVertical: 'center',
-    paddingLeft: '5%'
+    paddingLeft: MedidorPixel(10)
   }
 })

@@ -1,5 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import moment from 'moment';
+import MedidorPixel from './MedidorPixel';
 
 export default function DayCard({ day, Plantao, feriados }) {
   const Hoje = day.isSame(moment(), 'day');
@@ -38,10 +39,10 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontSize: 16,
+    fontSize: MedidorPixel(16),
     margin: 1,
     color: '#ffffff',
-    margin: 5,
+    margin: MedidorPixel(5),
   },
   hoje: {
     backgroundColor: '#00ff00',
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   hojeText: {
     fontWeight: 'bold',
     color: '#000',
-    fontSize: 20,
+    fontSize: MedidorPixel(20),
   },
   PlantaoText: {
     color: 'green',
