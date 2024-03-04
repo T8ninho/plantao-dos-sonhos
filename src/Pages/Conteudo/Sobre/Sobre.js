@@ -20,7 +20,10 @@ export default function Sobre() {
 						<Text style={styles.text}>- Enviar um email</Text>
 						<Text style={styles.text}>- Avaliar o aplicativo com 5 estrelas</Text>
 						<TouchableHighlight onPress={() => LinkPress('http://www.t8ninho.com/')}>
-							<Text style={[styles.text, {textDecorationLine: 'underline'}]}>- Acessar meu site</Text>
+							<View style={{flexDirection: 'row'}}>
+								<Text style={styles.text}>- </Text>
+								<Text style={[styles.text, {textDecorationLine: 'underline'}]}>Acessar meu site</Text>
+							</View>
 						</TouchableHighlight>
 					</View>
 				</View>
@@ -28,7 +31,7 @@ export default function Sobre() {
 			<View style={styles.containerFooter}>
 				<Text style={styles.textFooter}>Desenvolvido por T8ninho</Text>
 				<TouchableHighlight onPress={() => LinkPress('http://www.t8ninho.com/')}>
-					<Text style={styles.textLink}>www.t8ninho.com</Text>
+					<Text style={styles.textLink}>www.T8ninho.com</Text>
 				</TouchableHighlight>
 			</View>
 		</View>

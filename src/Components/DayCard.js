@@ -14,9 +14,9 @@ export default function DayCard({ day, Plantao, feriados }) {
       <Text
         style={[
           styles.day,
-          Hoje && styles.hojeText,
-          Plantao(day) && styles.PlantaoText,
           isFeriado && styles.feriadoText,
+          Plantao(day) && styles.PlantaoText,
+          Hoje && styles.hojeText,
         ]}
       >
         {day.format('D')}
@@ -51,9 +51,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
     fontSize: MedidorPixel(20),
+    borderColor: '#000',
+    borderWidth: 2,
+    borderRadius: 50,
   },
   PlantaoText: {
-    color: 'green',
     borderColor: '#00ff00',
     borderWidth: 2,
     borderRadius: 50,
