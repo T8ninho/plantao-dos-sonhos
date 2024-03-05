@@ -1,14 +1,15 @@
 import 'moment/locale/pt-br';
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
-import DayCard from '../../../Components/DayCard';
+
 import SelectDate from '../../../Components/SelectDate';
 import FeriadosList from '../../../Components/FeriadosList';
 import MedidorPixel from '../../../Components/MedidorPixel';
+import RenderCalendar from '../../../Components/RenderCalendar';
+import DescriptionCalendar from '../../../Components/DescriptionCalendar';
 
 moment.locale('pt-br');
 
@@ -18,8 +19,6 @@ const Calendario = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [feriados, setFeriados] = useState([]); // Adicione o estado para armazenar os feriados
-
-  const weekdaysShort = moment.weekdaysShort();
 
   const onStartDateChange = (selectedDate) => {
     setStartDate(moment(selectedDate));
@@ -38,12 +37,24 @@ const Calendario = () => {
   };
 
   const Plantao = (day) => {
+    // Clona as datas sem a parte do tempo (horas, minutos, segundos, milissegundos)
+    const startDateWithoutTime = startDate ? startDate.clone().startOf('day') : null;
+    const endDateWithoutTime = endDate ? endDate.clone().startOf('day') : null;
+    const dayWithoutTime = day.clone().startOf('day');
+
+  // Verifica se as datas (sem a parte do tempo) estão definidas
     return (
-      day.isSameOrAfter(startDate) &&
-      day.isSameOrBefore(endDate) &&
-      day.diff(startDate, 'days') % 2 === 0
+      startDateWithoutTime && 
+      endDateWithoutTime && 
+      // Compara as datas (sem a parte do tempo)
+      dayWithoutTime.isSameOrAfter(startDateWithoutTime) &&
+      dayWithoutTime.isSameOrBefore(endDateWithoutTime) &&
+      // Verifica se a diferença em dias (sem a parte do tempo) é par
+      dayWithoutTime.diff(startDateWithoutTime, 'days') % 2 === 0
     );
   };
+  
+  
 
   useEffect(() => {
     const carregarDados = async () => {
@@ -91,87 +102,33 @@ const Calendario = () => {
     salvarDados();
   }, [startDate, endDate]); // Executa sempre que startDate ou endDate mudarem
 
-  const renderCalendar = () => {
-    const daysInMonth = currentMonth.daysInMonth();
-    const firstDayOfMonth = currentMonth.startOf('month').day();
-    const daysArray = [];
-
-    for (let i = 0; i < firstDayOfMonth; i++) {
-      daysArray.push(null);
-    }
-
-    for (let i = 1; i <= daysInMonth; i++) {
-      const day = currentMonth.clone().date(i);
-      daysArray.push(day);
-    }
-
-    return daysArray.map((day, index) => (
-      <View key={index} style={styles.dayContainer}>
-        {day !== null ? (
-          <DayCard day={day} currentMonth={currentMonth} Plantao={Plantao} feriados={feriados} />
-        ) : (
-          <Text></Text>
-        )}
-      </View>
-    ));
-  };
-
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={prevMonth}>
-          <FontAwesome name="chevron-left" size={32} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>
-          {currentMonth.format('MMMM').charAt(0).toUpperCase() +
-            currentMonth.format('MMMM/YYYY').slice(1)}
-        </Text>
-        <TouchableOpacity onPress={nextMonth}>
-          <FontAwesome name="chevron-right" size={32} color="black" />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.weekDays}>
-        {weekdaysShort.map((weekday) => (
-          <Text key={weekday} style={styles.weekDay}>
-            {weekday.charAt(0).toUpperCase() + weekday.slice(1)}
-          </Text>
-        ))}
-      </View>
-      <View style={styles.calendar}>{renderCalendar()}</View>
+      
+      <RenderCalendar 
+        currentMonth={currentMonth} 
+        Plantao={Plantao} 
+        feriados={feriados} 
+        nextMonth={nextMonth}
+        prevMonth={prevMonth}
+      />
 
-      <View style={styles.descricaoContainer}>
-        <Text style={styles.descricaoIconPlantao}/>
-        <Text style={styles.descricaoText}>Plantões de trabalho</Text>
-      </View>
-      <View style={styles.descricaoContainer}>
-        <Text style={styles.descricaoIconFeriado}/>
-        <Text style={styles.descricaoText}>Feriados Nacionais</Text>
-      </View>
+      <DescriptionCalendar />
 
-      <FeriadosList feriados={feriados} currentMonth={currentMonth} />
+      <FeriadosList 
+        feriados={feriados} 
+        currentMonth={currentMonth} 
+      />
 
       <View style={styles.selectedDatesContainer}>
-          <View style={styles.selectDateItem}>
-            <SelectDate initialDate={startDate ? startDate.toDate() : new Date()} onDateChange={onStartDateChange}>
-              Data Inicial
-            </SelectDate>
-            {startDate && (
-            <View style={styles.dateTextItem}>
-              <Text style={styles.selectDateText}>{startDate.format('DD/MM/YYYY')}</Text>
-            </View>
-            )}
-          </View>
-          <View style={styles.selectDateItem}>
-            <SelectDate initialDate={endDate ? endDate.toDate() : new Date()} onDateChange={onEndDateChange} >
-              Data Final
-            </SelectDate>
-            {endDate && (
-              <View style={styles.dateTextItem}>
-                <Text style={styles.selectDateText}>{endDate.format('DD/MM/YYYY')}</Text>
-              </View>
-            )}
-          </View>
+        <SelectDate selectedDate={startDate} onDateChange={onStartDateChange}>
+          Data Inicial:
+        </SelectDate>
+        <SelectDate selectedDate={endDate} onDateChange={onEndDateChange} >
+          Data Final:
+        </SelectDate>
       </View>
+            
     </View>
   );
 };
@@ -182,85 +139,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: MedidorPixel(10), //20 px
     backgroundColor: '#071e42'
   },
-  header: {
-    backgroundColor: '#00ff00',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: MedidorPixel(10), //10 px
-    paddingHorizontal: MedidorPixel(10), //10 px
-  },
-  headerText: {
-    textAlign: 'center',
-    fontWeight: '900',
-    fontSize: MedidorPixel(22), //22px
-    color: '#000',
-    padding: MedidorPixel(10), //10 px
-  },
-  calendar: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  dayContainer: {
-    width: '14.28%', // 7 dias por semana
-    aspectRatio: 1,
-  },
-  weekDays: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: MedidorPixel(5), //5 px
-  },
-  weekDay: {
-    flex: 1,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: MedidorPixel(14), //14px
-    margin: 1,
-    color: '#10e956',
-  },
   selectedDatesContainer: {
     paddingTop: MedidorPixel(15), //15 px
     paddingHorizontal: MedidorPixel(15), //15 px
     paddingBottom: MedidorPixel(5), //5 px
     marginTop: MedidorPixel(10), //10 px
     backgroundColor: '#00000025',
-  },
-  selectDateItem: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginRight: MedidorPixel(10), //10 px
-  },
-  dateTextItem: {
-    width: '48%',
-    paddingBottom: MedidorPixel(10), //10 px
-    justifyContent: 'center'
-  },
-  selectDateText: {
-    color: '#fff'
-  },
-  descricaoContainer: {
-    backgroundColor: '#00000025', 
-    marginTop: MedidorPixel(15), //15 px
-    padding: MedidorPixel(15), //15 px
-    flexDirection: 'row'
-  },
-  descricaoText: {
-    textAlignVertical: 'center', 
-    color: '#fff', 
-    paddingLeft: MedidorPixel(10),
-  },
-  descricaoIconPlantao: {
-    aspectRatio: 1,
-    width: '8%',
-    borderColor: '#00ff00',
-    borderWidth: 2,
-    borderRadius: 50,
-  },
-  descricaoIconFeriado: {
-    backgroundColor: '#005499',
-    aspectRatio: 1,
-    width: '8%',
-    borderRadius: 10,
+    justifyContent: 'space-evenly'
   }
 });
 

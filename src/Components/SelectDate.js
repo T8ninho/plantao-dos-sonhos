@@ -4,11 +4,13 @@ import { FontAwesome } from '@expo/vector-icons';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import MedidorPixel from './MedidorPixel';
 
-export default function SelectDate ({ onDateChange, initialDate, children }) {
-  const [date, setDate] = useState(initialDate || new Date());
+export default function SelectDate ({ onDateChange, selectedDate, children }) {
+  const [date, setDate] = useState(selectedDate ? selectedDate.toDate() : new Date() || new Date());
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
+  // initialDate ? initialDate.toDate() : new Date()
+
+  const onChange = (event, item) => {
+    const currentDate = item;
     setDate(currentDate);
     onDateChange(currentDate)
   };
@@ -26,19 +28,39 @@ export default function SelectDate ({ onDateChange, initialDate, children }) {
     <View style={styles.container}>
         <TouchableOpacity onPress={showDatepicker} style={{flexDirection: 'row'}}>
           <FontAwesome name="calendar" size={MedidorPixel(32)} color="#00ff00" />
-          <Text style={styles.title}>{children}</Text>
+          <View>
+            <Text style={styles.title}>{children}</Text>
+            {selectedDate && (
+              <View style={styles.dateTextItem}>
+                <Text style={styles.selectDateText}>{selectedDate.format('DD/MM/YYYY')}</Text>
+              </View>
+            )}
+          </View>
         </TouchableOpacity>
+        
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: MedidorPixel(10)
+    width: '48%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingVertical: MedidorPixel(5)
   },
   title: {
     color: '#fff',
     textAlignVertical: 'center',
     paddingLeft: MedidorPixel(10)
-  }
+  },
+  dateTextItem: {
+    paddingBottom: MedidorPixel(10), //10 px
+    justifyContent: 'center'
+  },
+  selectDateText: {
+    color: '#1d861d',
+    textAlign: 'center',
+    paddingLeft: MedidorPixel(10)
+  },
 })

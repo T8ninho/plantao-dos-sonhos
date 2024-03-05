@@ -9,7 +9,7 @@ export default function DayCard({ day, Plantao, feriados }) {
   return (
     <TouchableOpacity
       style={[styles.dayContainer, Hoje && styles.hoje, isFeriado && styles.feriado]}
-      onPress={() => console.log(day)}
+      onPress={() => console.log(day.format('DD/MM/YYYY'))}
     >
       <Text
         style={[
@@ -17,6 +17,7 @@ export default function DayCard({ day, Plantao, feriados }) {
           isFeriado && styles.feriadoText,
           Plantao(day) && styles.PlantaoText,
           Hoje && styles.hojeText,
+          (Hoje === Plantao(day) && Hoje === true) && styles.PlantaoTextHoje
         ]}
       >
         {day.format('D')}
@@ -51,12 +52,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
     fontSize: MedidorPixel(20),
-    borderColor: '#000',
-    borderWidth: 2,
-    borderRadius: 50,
   },
   PlantaoText: {
     borderColor: '#00ff00',
+    borderWidth: 2,
+    borderRadius: 50,
+  },
+  PlantaoTextHoje: {
+    borderColor: '#000',
     borderWidth: 2,
     borderRadius: 50,
   },

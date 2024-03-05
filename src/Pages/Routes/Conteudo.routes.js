@@ -31,7 +31,8 @@ export default function Conteudo() {
 				},
 				drawerStyle: {
 					backgroundColor: '#0b0f32',				
-				}
+				},
+				swipeEdgeWidth:1000
 			}}
 	  
 		>
