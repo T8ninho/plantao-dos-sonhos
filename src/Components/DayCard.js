@@ -8,7 +8,11 @@ export default function DayCard({ day, Plantao, feriados }) {
 
   return (
     <TouchableOpacity
-      style={[styles.dayContainer, Hoje && styles.hoje, isFeriado && styles.feriado]}
+      style={[
+          styles.dayContainer,
+          Hoje && styles.hoje, 
+          isFeriado && styles.feriado,
+        ]}
       onPress={() => console.log(day.format('DD/MM/YYYY'))}
     >
       <Text
