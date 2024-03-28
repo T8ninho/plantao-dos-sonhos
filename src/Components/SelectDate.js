@@ -37,25 +37,20 @@ export default function SelectDate ({ onDateChange, selectedDate, children }) {
             )}
           </View>
         </TouchableOpacity>
-        
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '48%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    paddingVertical: MedidorPixel(5)
+    alignItems: 'center'
   },
   title: {
     color: '#fff',
     textAlignVertical: 'center',
-    paddingLeft: MedidorPixel(10)
+    paddingLeft: MedidorPixel(10),
   },
   dateTextItem: {
-    paddingBottom: MedidorPixel(10), //10 px
     justifyContent: 'center'
   },
   selectDateText: {

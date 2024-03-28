@@ -5,11 +5,11 @@ export default function DescriptionCalendar() {
 	return(
 		<View style={styles.descricaoContainer}>
 			<View style={styles.descricaoSubContainer}>
-				<Text style={styles.descricaoIconPlantao}/>
+				<Text style={[styles.descIcon, styles.descricaoIconPlantao]}/>
 				<Text style={styles.descricaoText}>Plantões de trabalho</Text>
 			</View>
 			<View style={styles.descricaoSubContainer}>
-				<Text style={styles.descricaoIconFeriado}/>
+				<Text style={[styles.descIcon,styles.descricaoIconFeriado]}/>
 				<Text style={styles.descricaoText}>Feriados Nacionais</Text>
 			</View>
       	</View>
@@ -34,17 +34,17 @@ const styles = StyleSheet.create({
 		color: '#fff', 
 		paddingLeft: MedidorPixel(10),
 	},
-	descricaoIconPlantao: {
+	descIcon: {
 		aspectRatio: 1,
 		width: '8%',
+	},
+	descricaoIconPlantao: {
 		borderColor: '#00ff00',
 		borderWidth: 2,
 		borderRadius: 50,
 	},
 	descricaoIconFeriado: {
 		backgroundColor: '#005499',
-		aspectRatio: 1,
-		width: '8%',
 		borderRadius: 10,
 	}
 })

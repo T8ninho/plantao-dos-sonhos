@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     borderColor: '#ffffff21',
     borderWidth: 1,
     borderRadius: 10,
-    margin: 1,
+    margin: 2,
     justifyContent: 'center',
   },
   day: {

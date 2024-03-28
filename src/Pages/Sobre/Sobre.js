@@ -1,5 +1,5 @@
 import { Linking, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import MedidorPixel from '../../../Components/MedidorPixel';
+import MedidorPixel from '../../Components/MedidorPixel';
 
 
 export default function Sobre() {

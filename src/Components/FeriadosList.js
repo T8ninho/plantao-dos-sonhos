@@ -3,7 +3,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import moment from 'moment';
 import MedidorPixel from './MedidorPixel';
 
-const FeriadosList = ({ feriados, currentMonth }) => {
+export default function FeriadosList({ feriados, currentMonth }) {
   // Filtrar feriados para incluir apenas aqueles do mês atual
   const feriadosDoMes = feriados.filter(
     (feriado) =>
@@ -59,5 +59,3 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
 });
-
-export default FeriadosList;

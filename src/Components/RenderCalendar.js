@@ -74,27 +74,25 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		marginBottom: MedidorPixel(10), //10 px
-		paddingHorizontal: MedidorPixel(10), //10 px
+		padding: MedidorPixel(5),
+		paddingHorizontal: MedidorPixel(10),
 	  },
 	  headerText: {
-		textAlign: 'center',
 		fontWeight: '900',
-		fontSize: MedidorPixel(22), //22px
+		fontSize: MedidorPixel(22),
 		color: '#000',
-		padding: MedidorPixel(10), //10 px
 	  },
 	  weekDays: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		marginBottom: MedidorPixel(5), //5 px
+		marginTop: MedidorPixel(10),
+		marginBottom: MedidorPixel(10),
 	  },
 	  weekDay: {
 		flex: 1,
 		textAlign: 'center',
 		fontWeight: 'bold',
-		fontSize: MedidorPixel(14), //14px
-		margin: 1,
+		fontSize: MedidorPixel(14),
 		color: '#10e956',
 	  },	
 })

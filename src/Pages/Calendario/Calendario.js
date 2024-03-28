@@ -1,20 +1,21 @@
 import 'moment/locale/pt-br';
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-import SelectDate from '../../../Components/SelectDate';
-import FeriadosList from '../../../Components/FeriadosList';
-import MedidorPixel from '../../../Components/MedidorPixel';
-import RenderCalendar from '../../../Components/RenderCalendar';
-import DescriptionCalendar from '../../../Components/DescriptionCalendar';
+import SelectDate from '../../Components/SelectDate';
+import FeriadosList from '../../Components/FeriadosList';
+import MedidorPixel from '../../Components/MedidorPixel';
+import RenderCalendar from '../../Components/RenderCalendar';
+import DescriptionCalendar from '../../Components/DescriptionCalendar';
+import Swiper from 'react-native-swiper';
 
 moment.locale('pt-br');
 
 
-const Calendario = () => {
+export default function Calendario() {
   const [currentMonth, setCurrentMonth] = useState(moment());
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -103,51 +104,71 @@ const Calendario = () => {
   }, [startDate, endDate]); // Executa sempre que startDate ou endDate mudarem
 
   return (
-    <View style={styles.container}>
-      
-      <RenderCalendar 
-        currentMonth={currentMonth} 
-        Plantao={Plantao} 
-        feriados={feriados} 
-        nextMonth={nextMonth}
-        prevMonth={prevMonth}
-      />
+    <Swiper loop={false} showsPagination={false}>
+      <View style={styles.container}>
+        <RenderCalendar 
+          currentMonth={currentMonth} 
+          Plantao={Plantao} 
+          feriados={feriados} 
+          nextMonth={nextMonth}
+          prevMonth={prevMonth}
+        />
 
-      <DescriptionCalendar />
+        <DescriptionCalendar />
 
-      <FeriadosList 
-        feriados={feriados} 
-        currentMonth={currentMonth} 
-      />
-
-      <View style={styles.selectedDatesContainer}>
-        <SelectDate selectedDate={startDate} onDateChange={onStartDateChange}>
-          Data Inicial:
-        </SelectDate>
-        <SelectDate selectedDate={endDate} onDateChange={onEndDateChange} >
-          Data Final:
-        </SelectDate>
+        <View style={styles.containerDates}>
+          <Text style={styles.textTitle}>Definir escala plantonista:</Text>
+          <View style={styles.selectedDatesContainer}>
+            <View style={styles.selectedDatesSubContainer}>
+              <SelectDate selectedDate={startDate} onDateChange={onStartDateChange}>
+                Data Inicial:
+              </SelectDate>
+            </View>
+            <View style={styles.selectedDatesSubContainer}>
+              <SelectDate selectedDate={endDate} onDateChange={onEndDateChange} >
+                Data Final:
+              </SelectDate>
+            </View>
+          </View>
+        </View>
       </View>
-            
-    </View>
+      
+      <View style={styles.container}>
+        <FeriadosList
+          feriados={feriados} 
+          currentMonth={currentMonth} 
+        />
+      </View>
+      
+    </Swiper>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: MedidorPixel(10), //20 px
-    backgroundColor: '#071e42'
+    padding: MedidorPixel(10),
+    backgroundColor: '#071e42',
+  },
+  containerDates: {
+    paddingTop: MedidorPixel(10),
   },
   selectedDatesContainer: {
-    paddingTop: MedidorPixel(15), //15 px
-    paddingHorizontal: MedidorPixel(15), //15 px
-    paddingBottom: MedidorPixel(5), //5 px
-    marginTop: MedidorPixel(10), //10 px
-    backgroundColor: '#00000025',
+    marginTop: MedidorPixel(10),
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-between',
+    gap: MedidorPixel(10),
+  },
+  selectedDatesSubContainer: {
+    padding: MedidorPixel(10),
+    flex: 1,
+    backgroundColor: '#00000025',
+  },
+  textTitle: {
+    color: '#10e956',
+    fontWeight: 'bold',
+    paddingLeft: MedidorPixel(15),
+    fontSize: MedidorPixel(20),
   }
 });
 
-export default Calendario;
