@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import Calendario from '../Calendario/Calendario';
 import Sobre from '../Sobre/Sobre';
+import Login from '../../Api/Login';
 
 const Drawer = createDrawerNavigator();
 
@@ -29,8 +30,17 @@ export default function Routes() {
 				},
 				swipeEdgeWidth:100
 			}}
-	  
 		>
+			<Drawer.Screen 
+				name='Login' 
+				component={Login}  
+				options={{
+					title: 'Login',
+					drawerIcon: ({focused, color}) => (
+						<FontAwesome name="calendar" size={32} color={color}/>
+					)
+				}}
+			/>
 			<Drawer.Screen 
 				name='Calendario' 
 				component={Calendario}  

@@ -31,7 +31,6 @@ export default function FeriadosList({ feriados, currentMonth }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#00000025', 
-    marginTop: MedidorPixel(10), 
     padding: MedidorPixel(15)
   },
   title: {
