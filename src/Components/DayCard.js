@@ -1,6 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import moment from 'moment';
 import MedidorPixel from './MedidorPixel';
+import { useState } from 'react';
 
 export default function DayCard({ day, Plantao, feriados }) {
   const Hoje = day.isSame(moment(), 'day');
@@ -13,7 +14,6 @@ export default function DayCard({ day, Plantao, feriados }) {
           Hoje && styles.hoje, 
           isFeriado && styles.feriado,
         ]}
-      onPress={() => console.log(day.format('DD/MM/YYYY'))}
     >
       <Text
         style={[
@@ -21,7 +21,8 @@ export default function DayCard({ day, Plantao, feriados }) {
           isFeriado && styles.feriadoText,
           Plantao(day) && styles.PlantaoText,
           Hoje && styles.hojeText,
-          (Hoje === Plantao(day) && Hoje === true) && styles.PlantaoTextHoje
+          (Hoje === Plantao(day) && Hoje === true) && styles.PlantaoTextHoje,
+          (Hoje === isFeriado && Hoje === true) && styles.FeriadoTextHoje
         ]}
       >
         {day.format('D')}
@@ -37,20 +38,20 @@ const styles = StyleSheet.create({
     borderColor: '#ffffff21',
     borderWidth: 1,
     borderRadius: 10,
-    margin: 2,
-    justifyContent: 'center',
+    margin: 2
   },
   day: {
+    position: 'relative',
     flex: 1,
+    color: '#fff',
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: MedidorPixel(16),
-    margin: 1,
-    color: '#ffffff',
     margin: MedidorPixel(5),
   },
   hoje: {
     backgroundColor: '#00ff00',
+    margin: MedidorPixel(-2)
   },
   hojeText: {
     fontWeight: 'bold',
@@ -63,7 +64,14 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   PlantaoTextHoje: {
-    borderColor: '#000',
+    borderColor: '#000000',
+    color: '#000',
+    borderWidth: 2,
+    borderRadius: 50,
+  },
+  FeriadoTextHoje: {
+    borderColor: '#00ff00',
+    color: '#fff',
     borderWidth: 2,
     borderRadius: 50,
   },
@@ -71,7 +79,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#005499',
   },
   feriadoText: {
-    color: 'white',
     fontWeight: 'bold',
   },
 });
