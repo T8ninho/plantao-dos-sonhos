@@ -22,7 +22,7 @@ export default function DayCard({ day, Plantao, feriados }) {
           Plantao(day) && styles.PlantaoText,
           Hoje && styles.hojeText,
           (Hoje === Plantao(day) && Hoje === true) && styles.PlantaoTextHoje,
-          (Hoje === isFeriado && Hoje === true) && styles.FeriadoTextHoje
+          (Hoje === isFeriado && Hoje === Plantao(day) && Hoje === true) && styles.FeriadoTextHoje
         ]}
       >
         {day.format('D')}
