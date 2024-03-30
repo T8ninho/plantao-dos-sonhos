@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "plantao-dos-sonhos",
+    "name": "Plantão dos Sonhos",
     "slug": "plantao-dos-sonhos",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,10 +21,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.t8ninho.plantaodossonhos"
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#0b0f32"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "72beb6bb-9a5f-467c-913e-90fc696ee698"
+      }
     }
   }
 }

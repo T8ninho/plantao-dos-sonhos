@@ -1,0 +1,4 @@
+Menor Largura de dispositivos
+
+Infinix Note 10 Pro: 449 dp
+iPhone 5: 320 dp
