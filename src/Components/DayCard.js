@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     margin: MedidorPixel(-2)
   },
   hojeText: {
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#000',
     fontSize: MedidorPixel(20),
   },
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   FeriadoTextHoje: {
     borderColor: '#00ff00',
-    color: '#fff',
+    color: '#000',
     borderWidth: 2,
     borderRadius: 50,
   },
