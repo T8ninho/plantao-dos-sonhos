@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   hojeText: {
     fontWeight: '900',
-    color: '#fff',
+    color: '#000',
     fontSize: MedidorPixel(20),
   },
   PlantaoText: {
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   PlantaoTextHoje: {
     borderColor: '#000000',
-    color: '#fff',
+    color: '#000',
     borderWidth: 2,
     borderRadius: 50,
   },
