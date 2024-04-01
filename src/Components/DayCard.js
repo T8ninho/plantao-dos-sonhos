@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   hojeText: {
     fontWeight: '900',
-    color: '#000',
+    color: '#fff',
     fontSize: MedidorPixel(20),
   },
   PlantaoText: {
@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
   },
   PlantaoTextHoje: {
     borderColor: '#000000',
-    color: '#000',
+    color: '#fff',
     borderWidth: 2,
     borderRadius: 50,
   },
   FeriadoTextHoje: {
     borderColor: '#00ff00',
-    color: '#000',
+    color: '#fff',
     borderWidth: 2,
     borderRadius: 50,
   },

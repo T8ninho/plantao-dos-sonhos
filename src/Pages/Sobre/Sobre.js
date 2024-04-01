@@ -19,7 +19,7 @@ export default function Sobre() {
 					<View style={styles.containerDuvida}>
 						<Text style={styles.text}>- Enviar um email</Text>
 						<Text style={styles.text}>- Avaliar o aplicativo com 5 estrelas</Text>
-						<TouchableHighlight onPress={() => LinkPress('http://www.t8ninho.com/')}>
+						<TouchableHighlight style={styles.textLink} onPress={() => LinkPress('http://www.t8ninho.com/')}>
 							<View style={{flexDirection: 'row'}}>
 								<Text style={styles.text}>- </Text>
 								<Text style={[styles.text, {textDecorationLine: 'underline'}]}>Acessar meu site</Text>
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
 	textLink: {
 		textDecorationLine: 'underline',
 		textAlign: 'center',
+		paddingVertical: MedidorPixel(8), 
 		color: '#ffffff85'
 	},
 	containerDuvida: {
